@@ -4,7 +4,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-with open('C:/DEV/YP/hw05_final/secret_settings.txt') as f:
+with open('yatube/secret_settings.txt') as f:
     SECRET_KEY = f.read().strip()
 
 DEBUG = True
