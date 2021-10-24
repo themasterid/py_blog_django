@@ -83,15 +83,10 @@ TEMPLATES = [
     },
 ]
 
-# CACHES = {
-#    'default': {
-#        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-#    }
-# }
-
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        # 'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': os.path.join(BASE_DIR, 'yatube_cache/')
     }
 }
@@ -107,44 +102,37 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth'
+        '.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.'
+        'password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.'
+        'password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.'
+        'password_validation.NumericPasswordValidator',
     },
 ]
 
 LANGUAGE_CODE = 'ru'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = False
-
 USE_TZ = True
-
 DATE_FORMAT = 'd E Y'
 
 STATIC_URL = '/static/'
-
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
-
 NUMBER_POST = 5
-
 MEDIA_URL = '/media/'
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 INTERNAL_IPS = ('127.0.0.1', '192.168.0.1',)
-
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = 'pillow'
 
@@ -166,13 +154,28 @@ CKEDITOR_CONFIGS = {
             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
             {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
             {'name': 'basicstyles',
-             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
             {'name': 'paragraph',
-             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
-                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',]},
+            'items': [
+                'NumberedList',
+                'BulletedList',
+                '-', 'Outdent',
+                'Indent',
+                '-',
+                'Blockquote',
+                'CreateDiv',
+                '-',
+                'JustifyLeft',
+                'JustifyCenter',
+                'JustifyRight',
+                'JustifyBlock',
+                '-',
+                'BidiLtr',
+                'BidiRtl',
+            ]},
             {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
             {'name': 'insert',
-             'items': ['Image', 'Youtube', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            'items': ['Image', 'Youtube', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
             {'name': 'tools', 'items': ['Maximize',]},
         ],
         'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
@@ -189,8 +192,7 @@ CKEDITOR_CONFIGS = {
         # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'uploadimage', # the upload image feature
-            # your extra plugins here
+            'uploadimage',  # the upload image feature
             'div',
             'autolink',
             'youtube',
@@ -207,38 +209,6 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
-
-'''
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': [
-            [
-                'Undo', 'Redo',
-                '-', 'Bold', 'Italic', 'Underline',
-                '-', 'Link', 'Unlink', 'Anchor',
-                '-', 'Format',
-                '-', 'Maximize',
-                # '-', 'Table',
-                '-', 'Image',
-                '-', 'Youtube',
-                '-', 'Source',
-                '-', 'NumberedList', 'BulletedList'
-            ],
-            [
-                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock',
-                '-', 'Font', 'FontSize', 'TextColor',
-                '-', 'Outdent', 'Indent',
-                '-', 'HorizontalRule',
-                '-', 'Blockquote'
-            ]
-        ],
-        'height': 300,
-        'width': '100%',
-        'toolbarCanCollapse': False,
-        'forcePasteAsPlainText': True
-    }
-}
-'''
 
 CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
 CKEDITOR_RESTRICT_BY_USER = True
