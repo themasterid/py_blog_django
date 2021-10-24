@@ -1,0 +1,61 @@
+{% load static %}
+{% load thumbnail %}
+<header>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'posts:index' %}">
+      <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+      <span style="color:red">Py</span>Blog - #<span style="color:red">каждый</span>может
+    </a>
+    <button 
+      class="navbar-toggler my-3"
+      type="button"
+      data-toggle="collapse"
+      data-target="#collapsibleNavbar"
+      aria-controls="collapsibleNavbar" 
+      aria-expanded="false" 
+      aria-label=" navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse flex-grow-0" id="collapsibleNavbar">
+    <ul class="nav nav-pills nav-fill" >
+      {% with request.resolver_match.view_name as view_name %}
+      <li class="nav-item"> 
+        <a class="nav-link link-light {% if view_name == 'about:author' %}active{% endif %}" href="{% url 'about:author' %}">Об авторе</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light {% if view_name == 'about:tech' %}active{% endif %}" href="{% url 'about:tech' %}">Технологии</a>
+      </li>
+      {% if user.is_authenticated %}
+        <li class="nav-item"> 
+          <a class="nav-link link-light {% if view_name == 'users:logout' %}active{% endif %}" href="{% url 'users:logout' %}">Выйти</a>
+        </li>
+        <li class="nav-item bg-light rounded">
+          <a class="nav-link link-light" href="{% url 'posts:profile' user.username %}" >
+          <strong style="color:black;">@{{ user.username }}</strong>
+          {% thumbnail user.profile.avatar "800x800" crop="center" upscale=True as avatar_head %}
+            <img width="30" height="30" class="rounded img-fluid" src="{{ avatar_head.url }}">
+          {% empty %}
+            <img width="30" height="30" class="rounded img-fluid" src="{% static 'img/no_img.png' %}" alt="нет фото">
+          {% endthumbnail %}
+          </a>
+        </li>
+      {% else %}
+        <li class="nav-item"> 
+          <a class="nav-link link-light {% if view_name == 'users:login' %}active{% endif %}" href="{% url 'users:login' %}">Войти</a>
+        </li>
+        <li class="nav-item"> 
+          <a class="nav-link link-light {% if view_name == 'users:signup' %}active{% endif %}" href="{% url 'users:signup' %}">Регистрация</a>
+        </li>
+      {% endif %}
+      {% endwith %}
+    </ul>
+    <form class="form-inline ml-auto d-flex justify-content-center md-form form-sm" action="{% url 'posts:search_results' %}" method="get">
+      <input class="form-control form-control mr-1 w-75" name="q" type="text" placeholder="Поиск..." aria-label="Search">
+      <i class="fas fa-search" aria-hidden="true"></i>
+    </form>
+    </div>
+  </div>
+</nav>
+</header>

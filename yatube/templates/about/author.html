@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Об авторе проекта{% endblock %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% block content %}
+
+<div class="row p-2 mb-2 shadow-lg rounded bg-light">
+  
+  <div class="card p-2 mb-2">
+    <div class="card-body">
+      <h1 class="card-title">Об авторе</h1>
+    </div>
+  </div>
+
+  <aside class="col-12 col-md-3 p-1">
+    <div class="card shadow-lg p-1 mb-1 bg-white rounded" style="width: 100%">
+      <img src={% static 'my_photo/Klepikov_D.jpg' %} alt="Клепиков Дмитрий" title="Клепиков Дмитрий">
+    </div>
+    <div class="list-group">
+      <a href="https://github.com/themasterid/" class="list-group-item list-group-item-action" target="_blank">
+      <img class="icon" src={% static '/img/github_icon.png' %} width="32" height="32" alt='GitHub'>
+      <strong>GitHub</strong>
+      </a>
+      <a href="https://themasterid.github.io/" class="list-group-item list-group-item-action" target="_blank">
+      <img class="icon" src={% static '/img/cv.png' %} width="32" height="32" alt='GitHub'>
+      <strong>Curriculum Vitae</strong>
+      </a>
+      <a href="https://vk.com/dvklepikov/" class="list-group-item list-group-item-action" target="_blank">
+      <img class="icon" src={% static '/img/vk_icon.png' %} width="32" height="32" alt='GitHub'>
+      <strong>Vkontakte</strong>
+      </a>
+      <a href="https://www.facebook.com/dmitriy.v.klepikov/" class="list-group-item list-group-item-action" target="_blank">
+      <img class="icon" src={% static '/img/fb.png' %} width="32" height="32" alt='GitHub'>
+      <strong>FaceBook</strong>
+      </a>
+      <a href="https://linkedin.com/in/dmitriy-klepikov/" class="list-group-item list-group-item-action" target="_blank">
+      <img class="icon" src={% static '/img/linkedin.png' %} width="32" height="32" alt='GitHub'>
+      <strong>Linkedin</strong>
+      </a>
+    </div>
+  </aside>
+
+  <article class="col-12 col-md-9 p-2 mb-2">
+    <div class="card shadow-lg p-1 mb-1 rounded bg-light">
+      <div class="card-body">
+        <div class="row">
+            <p align="justify">
+            Доброе время суток, меня зовут Дмитрий, и я родом из Казахстана, начинающий разработчик Python.
+            Но Python это не единственная цель в моей жизни, в планах освоить и другие языки, такие как Golang и Kotlin.
+            На данный момент я являюсь студентом <a href="https://practicum.yandex.ru" target="_blank">Яндекс.Практикум</a> по специализации <a href="https://practicum.yandex.ru/profile/backend-developer/" target="_blank">Python - разработчик (back-end)</a>
+            это невероятно интересный момент в моей жизни.
+            </p>
+            <p align="justify">Первый шаг в IT который приносит мне море положительных эмоций и главное программировать мне нравится, надеюсь из этого получится что то большее.</a>
+            <p align="justify">В программирование я пришел в 2020 году, это было начало пандемии и пришлось сидеть дома,
+            но от <a href="https://www.gov.kz/memleket/entities/enbek?lang=ru" target="_blank">Министерство труда и социальной защиты населения Республики Казахстан</a>
+            совместно с <a href="https://www.coursera.org" target="_blank">Coursera</a> стала доступна программа, освоить новые профессии в период пандемии.
+            </p>
+            <p align="justify">
+            То есть выбирай любой курс Coursera и не выходя из дома получай новые знания. Выбор пал на Python.
+            Но Coursera не единственая платформа где мне пришлось проходить курсы по программированию. Небольшая история моего обучения, начнем с основ, Stepik
+            и более серьезные курсы проходили на Coursera, все они платные, и более углубленные.
+            </p>
+            <div class="card rounded">
+              <div class="card-body" style="text-align: center;">
+                <div id="demo1" class="carousel slide" data-ride="carousel">
+                  <ul class="carousel-indicators">
+                    <li data-target="#demo1" data-slide-to="0" class="active"></li>
+                    <li data-target="#demo1" data-slide-to="1"></li>
+                    <li data-target="#demo1" data-slide-to="2"></li>
+                    <li data-target="#demo1" data-slide-to="3"></li>
+                    <li data-target="#demo1" data-slide-to="4"></li>
+                    <li data-target="#demo1" data-slide-to="5"></li>
+                    <li data-target="#demo1" data-slide-to="6"></li>
+                    <li data-target="#demo1" data-slide-to="7"></li>
+                  </ul>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img class="d-block img-fluid"
+                      src={% static 'my_sertificats/coursera/CERTIFICATE_LANDING_PAGE_2DTULAJZSDRL.jpeg' %} alt="Python for Everybody" title="Python for Everybody"
+                      style="margin:auto;">
+                      <a class="link-light text-decoration-none" style="color: black;" href="https://coursera.org/share/4b594bb91cedca9f35ec15781215817b" target="_blank">
+                      Python for Everybody (University of Michigan)
+                      </a>
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block img-fluid"
+                      src={% static 'my_sertificats/coursera/CERTIFICATE_LANDING_PAGE_JGMSVM97453F.jpeg' %} alt="Погружение в Python" title="Погружение в Python"
+                      style="margin:auto;">
+                      <a class="link-light text-decoration-none" style="color: black;" href="https://coursera.org/share/12c8bbbcf92cb7add779e8a4f07e7782" target="_blank">
+                      Погружение в Python (Московский физико-технический институт)
+                      </a>
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block img-fluid"
+                      src={% static 'my_sertificats/coursera/CERTIFICATE_LANDING_PAGE_3UQYWNL86UHS.jpeg' %} alt="ООП и паттерны проектирования в Python" title="ООП и паттерны проектирования в Python"
+                      style="margin:auto;">
+                      <a class="link-light text-decoration-none" style="color: black;" href="https://coursera.org/share/81d441bf46cbba65996cf568f18e6e8a" target="_blank">
+                      ООП и паттерны проектирования в Python (Московский физико-технический институт)
+                      </a>
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block img-fluid"
+                      src={% static 'my_sertificats/coursera/CERTIFICATE_LANDING_PAGE_372QN8YKDTCJ.jpeg' %} alt="Создание Web-сервисов на Python" title="Создание Web-сервисов на Python"
+                      style="margin:auto;">
+                      <a class="link-light text-decoration-none" style="color: black;" href="https://coursera.org/share/8e285e944a990e14b2df3d37b4bcb78e" target="_blank">
+                      Создание Web-сервисов на Python (Московский физико-технический институт)
+                      </a>
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block img-fluid"
+                      src={% static 'my_sertificats/coursera/CERTIFICATE_LANDING_PAGE_45RC9MMP8WU5.jpeg' %} alt="Основы программирования на Python" title="Основы программирования на Python"
+                      style="margin:auto;">
+                      <a class="link-light text-decoration-none" style="color: black;" href="https://coursera.org/share/5aa12a011a095f092d070f3c96de1f2b" target="_blank">
+                      Основы программирования на Python (НИУ ВШЭ)
+                      </a>
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block img-fluid"
+                        src={% static 'my_sertificats/stepik/stepik_1012934.png' %} alt="Поколение Python: курс для начинающих" title="Поколение Python: курс для начинающих"
+                        style="margin:auto;">
+                        <a class="link-light text-decoration-none" style="color: black;" href="https://stepik.org/cert/1012934" target="_blank">
+                        "Поколение Python": курс для начинающих
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block img-fluid"
+                      src={% static 'my_sertificats/stepik/stepik_1000064.png' %} alt="Программирование на Python" title="Программирование на Python"
+                      style="margin:auto;">
+                      <a class="link-light text-decoration-none" style="color: black;" href="https://stepik.org/cert/1000064" target="_blank">
+                      Программирование на Python
+                      </a>
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block img-fluid"
+                        src={% static 'my_sertificats/stepik/stepik_not_.png' %} alt="Поколение Python: курс для продвинутых(не закончен)" title="Поколение Python: курс для продвинутых(не закончен)"
+                        style="margin:auto;">
+                        <a class="link-light text-decoration-none" style="color: black;" href="#" class="btn btn-link">
+                        "Поколение Python": курс для продвинутых(не закончен)
+                        </a>
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#demo1" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                  </a>
+                  <a class="carousel-control-next" href="#demo1" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <p class="card-text" align="justify">
+              И вот с 2021 года я начал обучение в Яндекс.Практикум. Выбрал специализацию <strong>Python - разработчик (back-end)</strong>. Результат обучения на данный момент этот сайт.
+              </p>
+              <p align="justify">
+              Это только начало моего пути, в переди много технологий которых мне придется освоить, будет тяжело, но я справлюсь :).
+            </p>
+          </div>
+      </div>
+    </div>
+  </article>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</div>
+{% endblock %}

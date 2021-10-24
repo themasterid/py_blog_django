@@ -1,0 +1,99 @@
+<!-- templates/users/update.html -->
+{% extends 'base.html' %}
+{% block title %}Изменить профиль{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+<div class="col-md-8 p-5">
+  <div class="card">
+    <div class="card-header">Изменить профиль</div>
+    <div class="card-body">
+        {% load user_filters %}
+        {% if user_form.errors %}
+            {% for field in user_form %}
+              {% for error in field.errors %}            
+                <div class="alert alert-danger">
+                  {{ error|escape }}
+                </div>
+              {% endfor %}
+            {% endfor %}
+            {% for error in user_form.non_field_errors %}
+              <div class="alert alert-danger">
+                {{ error|escape }}
+              </div>
+            {% endfor %}
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% for field in user_form %}<div class="form-group row my-3"
+            {% if field.field.required %} 
+              aria-required="true"
+            {% else %}
+              aria-required="false"
+            {% endif %}
+          >
+            <label for="{{ field.id_for_label }}">
+              {{ field.label }}
+                {% if field.field.required %}
+                  <span class="required text-danger">*</span>
+                {% endif %}
+            </label>
+            <div>
+            {{ field|addclass:'form-control' }}
+              {% if field.help_text %}
+                <small id="{{ field.id_for_label }}-help" class="form-text text-muted">
+                  {{ field.help_text|safe }}
+                </small>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+
+        {% if profile_form.errors %}
+            {% for field in profile_form %}
+              {% for error in field.errors %}            
+                <div class="alert alert-danger">
+                  {{ error|escape }}
+                </div>
+              {% endfor %}
+            {% endfor %}
+            {% for error in profile_form.non_field_errors %}
+              <div class="alert alert-danger">
+                {{ error|escape }}
+              </div>
+            {% endfor %}
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% for field in profile_form %}<div class="form-group row my-3"
+            {% if field.field.required %} 
+              aria-required="true"
+            {% else %}
+              aria-required="false"
+            {% endif %}
+          >
+            <label for="{{ field.id_for_label }}">
+              {{ field.label }}
+                {% if field.field.required %}
+                  <span class="required text-danger">*</span>
+                {% endif %}
+            </label>
+            <div>
+            {{ field|addclass:'form-control' }}
+              {% if field.help_text %}
+                <small id="{{ field.id_for_label }}-help" class="form-text text-muted">
+                  {{ field.help_text|safe }}
+                </small>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+
+        <div class="d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %} 

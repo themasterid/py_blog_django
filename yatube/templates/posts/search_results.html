@@ -1,0 +1,49 @@
+
+{% extends "base.html" %}
+{% block title %}Поиск{% endblock %}
+{% block content %}
+
+<div class="row p-2 mb-2 shadow-lg rounded bg-light">
+  <div class="card p-2 mb-2">
+    <div class="card-body">
+      <div class="form-group has-search">
+        <form class="form-inline ml-auto d-flex justify-content-center md-form form-sm" action="{% url 'posts:search_results' %}" method="get">
+          <input class="form-control form-control mr-1 w-75" name="q" type="text" placeholder="Поиск..." aria-label="Search">
+          <i class="fas fa-search" aria-hidden="true"></i>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <article class="col-12 p-1 mb-1">
+    <div class="row shadow-lg p-2 mb-2 bg-white rounded">
+      {% if object_list %}
+      {% for post in object_list %}
+        {% include 'posts/includes/ul_posts.html' %}
+        {% include 'posts/includes/post_block.html' %}
+
+        <ul class="list-group shadow-lg p-1 mb-1 bg-white rounded">
+          <li class="list-group-item list-group-item-light">
+          <a href="{% url 'posts:post_detail' post.id %}"><button type="button" class="btn btn-outline-primary btn-sm">Подробная информация</button></a>
+          </a>
+          {% if post.group %}
+            <a href="{% url 'posts:group_list' post.group.slug %}"><button type="button" class="btn btn-outline-primary btn-sm">Все записи группы {{ post.group }}</button></a>
+          {% endif %}
+          <a href="{% url 'posts:post_detail' post.id %}"><button type="button" class="btn btn-outline-primary btn-sm">Комментариев: <strong>{{ post.comments.count }}</strong></button></a>
+          </li>
+        </ul>
+
+        {% if not forloop.last %}{% endif %}
+      {% endfor %}
+      {% else %}
+      <div class="card p-2 mb-2">
+        <div class="card-body">
+          <h4 class="card-title text-center">Ничего не найдено</h4>
+        </div>
+      </div>
+      {% endif %}
+      {% include 'posts/includes/paginator.html' %}
+    </div>
+  </article>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load static %}
+{% block title %}
+    Профиль пользователя
+    {% if author.get_full_name %}
+        {{ author.get_full_name }}
+    {% else %}
+        {{ author }}
+    {% endif %}
+{% endblock %}
+{% block content %}
+
+<div class="row p-2 mb-2 bg-light text-dark rounded">
+
+<aside class="col-12 col-md-3 p-2 mb-2 bg-light text-dark rounded">
+{% include 'posts/includes/aside.html' %} 
+{% include 'posts/includes/aside_list.html' %}
+</aside>
+
+<article class="col-12 col-md-9">
+
+    <div class="card rounded p-2 mb-2 bg-light text-dark">
+        <div class="card-body">
+            <h1 class="card-title">Автор: {{ author.get_full_name }}</h1>
+            <p class="card-text">
+            | Всего записей: <strong>{{ request.user.posts.count }}</strong> | 
+            Всего комментариев: <strong>{{ request.user.comments.count }}</strong> | 
+            Подписчики: <strong>{{ request.user.following.count }}</strong> | 
+            Подписан: <strong>{{ request.user.follower.count }}</strong> |
+            </p>
+        </div>
+    </div>
+
+{% for post in page_obj %}
+    <ul class="list-group">
+        <li class="list-group-item p-2 mb-2 bg-white rounded">
+        Дата публикации: <strong>{{ post.pub_date|date:'d E Y' }}</strong>
+        </li>
+    </ul>
+    {% include 'posts/includes/post_block.html' %}
+    <div class="card rounded mb-2 bg-light text-dark">
+        <div class="card-body">
+            <a href="{% url 'posts:post_detail' post.id %}"><button type="button" class="btn btn-outline-primary btn-sm">Подробная информация</button></a>  
+            {% if post.group %}
+            <a href="{% url 'posts:group_list' post.group.slug %}"><button type="button" class="btn btn-outline-primary btn-sm">Все записи группы {{ post.group }}</button></a>
+            {% endif %}
+            <a href="{% url 'posts:post_detail' post.id %}"><button type="button" class="btn btn-outline-primary btn-sm">Комментариев: <strong>{{ post.comments.count }}</strong></button></a>
+            <img width="24" height="24" class="rounded img-fluid" src="{% static 'img/views_posts.png' %}" alt="нет фото"> <strong>{{post.total_views}}</strong>
+        </div>
+    </div>
+    {% if not forloop.last %}{% endif %}
+{% endfor %}
+{% include 'posts/includes/paginator.html' %}
+</article>
+</div>
+{% endblock %}

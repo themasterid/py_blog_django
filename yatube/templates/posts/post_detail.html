@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load static %}
+{% load thumbnail %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block content %}
+
+<div class="row shadow-lg p-2 mb-2 bg-white rounded">
+  <aside class="col-12 col-md-3 shadow-lg p-2 mb-2 bg-white rounded">
+  {% include 'posts/includes/aside.html' %}
+  {% include 'posts/includes/aside_list.html' %}
+  </aside>
+  <article class="col-12 col-md-9">
+    <div class="card shadow-lg p-1 mb-1 bg-white rounded" style="width: 100%">
+      {% thumbnail post.image "960x339" crop="center" upscale=True as im %}
+        <img class="card-img-top" src="{{ im.url }}">
+      {% endthumbnail %}
+      <div class="card-body">
+        <h4 class="card-title">
+        {{ post.title }} 
+        | <a href="{% url "posts:post_share" post.id %}" class="link-light text-decoration-none">
+        <img src="{% static 'img/send_email.png' %}" width='24px;' height='24px;' alt="Поделиться постом"
+        data-toggle="tooltip" data-placement="top" title="Поделиться постом">
+        </a> |
+        {% if post.author == requser %}
+        <a href="{% url 'posts:edit' post.id %}" class="link-light text-decoration-none">
+        <img src="{% static 'img/edit_btn.gif' %}" width='24px;' height='24px;' data-toggle="tooltip" data-placement="top" title="Редактировать пост">
+        </a> |
+        <a href="{% url 'posts:edit' post.id %}" class="link-light text-decoration-none"  data-toggle="modal" data-target="#exampleModalCenter">
+        <img src="{% static 'img/delete_btn.gif' %}" width='24px;' height='24px;' data-toggle="tooltip" data-placement="top" title="Удалить пост">
+        </a> |
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Удаление записи!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Вы действительно ходите удалить запись?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Закрыть</button>
+                <a href="{% url 'posts:delete' post.id %}"><button type="button" class="btn btn-outline-danger btn-sm">Удалить запись</button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        </h4>
+        <hr>
+        <p class="card-text">{{ post.text|safe|linebreaks }}</p>
+      </div>
+    </div>
+
+      <div class="card-body shadow-lg p-2 mb-2 bg-white rounded">
+        <form action="{% url 'posts:post_like' post.id %}" method="POST">
+        {% csrf_token %}
+        {% if post_is_liked %}
+        <button type="submit" value="{{ post.id }}" class="btn btn-light">
+        <img src="{% static 'img/dislike_btn.png' %}" width='24px;' data-toggle="tooltip" data-placement="top" title="Убрать лайк">
+        </button>
+        {% else %}
+        <button type="submit" value="{{ post.id }}" class="btn btn-light">
+        <img src="{% static 'img/like_btn.png' %}" width='24px;' data-toggle="tooltip" data-placement="top" title="Поставить лайк">
+        </button>
+        {% endif %}
+        <strong class="text-secondary">Лайкнули: {{ post.likes.count }}</strong> | 
+        <strong class="text-secondary">Комментариев: {{ comments_details.count }}</strong>
+        </form>
+      </div>
+
+      {% load user_filters %}
+      {% for comment in comments_details %}
+
+      <div class="card shadow-lg p-2 mb-2 bg-white rounded" style="max-width: 100%;">
+        <div class="row p-2 mb-2">
+          <div class="col-md-2">
+            {% thumbnail comment.author.profile.avatar "800x800" crop="center" upscale=True as small_comm %}
+              <img class="img-fluid img-thumbnail mx-auto card-img" src="{{ small_comm.url }}">
+            {% empty %}
+              <img class="img-fluid img-thumbnail mx-auto card-img" src="{% static 'img/no_img.png' %}" alt="нет фото">
+            {% endthumbnail %}
+          </div>
+          <div class="col">
+            <div class="card-body mw-100 rounded bg-light">
+              <h4 class="card-title">
+              <a href="{% url 'posts:profile' comment.author.username %}">{{ comment.author.get_full_name }}</a>
+              {% if comment.author == request.user %}
+              <a href="{% url 'posts:delete_comment' post.id comment.id %}" class="link-light text-decoration-none">
+              <img src="{% static 'img/delete_btn.gif' %}" width='24px;' height='24px;' data-toggle="tooltip" data-placement="top" title="Удалить комментарий">
+              </a>
+              {% endif %}
+              </h4>
+              <p class="card-text">{{ comment.text|safe|linebreaks }}</p>
+              <p class="card-text"><small class="text-muted">{{ comment.created|date:'d E Y' }}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% empty %}
+      <div class="card-body shadow-lg p-2 mb-2 bg-white rounded">
+      Комментариев нет, будь первым! 
+      </div>
+      {% endfor %}
+
+
+      {% if not user.is_authenticated %}
+      <div class="card-body shadow-lg p-2 mb-2 bg-white rounded">
+        Для комментирования 
+        <a href="{% url 'users:login' %}" 
+        data-toggle="tooltip" data-placement="top" title="Вход на сайта">войдите</a> или <a href="{% url 'users:signup' %}"
+        data-toggle="tooltip" data-placement="top" title="Регистрация">зарегистрируйтесь</a>
+      </div>
+      {% endif %}
+
+      {% if user.is_authenticated %}
+          <div class="card-body shadow-lg p-2 mb-2 bg-white rounded">
+            <form method="post" action="{% url 'posts:add_comment' post.id %}">
+              {% csrf_token %}
+              {{ form.media }}
+              <div class="form-group mb-1">
+                {{ form.text|addclass:"form-control" }}
+              </div>
+              <button type="submit" class="btn btn-primary">Отправить комментарий</button>
+            </form>
+          </div>
+      {% endif %}
+</article>
+</div>
+{% endblock %}

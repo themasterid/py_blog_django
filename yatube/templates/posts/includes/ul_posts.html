@@ -1,0 +1,23 @@
+{% load static %}
+{% load thumbnail %}
+<ul class="list-group shadow-lg p-1 mb-2 bg-white rounded">
+  <li class="list-group-item list-group-item-light d-flex justify-content-between">
+<span>
+  Автор:
+  <strong> 
+  <a href="{% url 'posts:profile' post.author %}" class="link-light text-decoration-none" style="color: black;">
+    {% if post.author.get_full_name %}{{ post.author.get_full_name }}{% else %}{{ post.author }}{% endif %}
+  </a>
+  </strong>
+  {% thumbnail post.author.profile.avatar "800x800" crop="center" upscale=True as avatar_head %}
+    <img width="30" height="30" class="rounded img-fluid" src="{{ avatar_head.url }}">
+  {% empty %}
+    <img width="30" height="30" class="rounded img-fluid" src="{% static 'img/no_img.png' %}" alt="нет фото">
+  {% endthumbnail %}
+  </a>
+  </span>
+  <span>
+  Дата публикации: <strong style="color: black;">{{ post.pub_date|date:'d E Y' }}</strong>
+  </span>
+  </li>
+</ul>

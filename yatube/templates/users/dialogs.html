@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load user_filters %}
+{% load tz %}
+{% block title %}Диалоги на сайте{% endblock %}
+{% block content %}
+<div class="row shadow-lg p-2 mb-2 bg-white rounded">
+    <aside class="col-12 col-md-3 shadow-lg p-2 mb-2 bg-white rounded">
+    {% include 'posts/includes/aside.html' %} 
+    {% include 'posts/includes/aside_list.html' %}
+    </aside>
+    <article class="col-12 col-md-9">
+    {% if chats.count == 0 %}
+        <div class="panel panel-body">Нет ни одного начатого диалога!</div>
+    {% endif %}
+    {% for chat in chats %}
+        {% if chat.message_set.count != 0 %}
+            {% get_companion user chat as companion %}
+            {% with last_message=chat.message_set.last %}
+                <div class="table-responsive">
+                <table cellpadding="4" cellspacing="0" class="table">
+                    <tr valign="middle">
+                        <td rowspan="2" width="15%" align="center">
+                        {% thumbnail companion.profile.avatar "x800" crop="center" as small_comm %}
+                        <img width="40px" height="auto" class="img-fluid rounded" src="{{ small_comm.url }}">
+                        {% empty %}
+                        <img width="40px" height="auto" lass="img-fluid rounded" src="{% static 'img/no_img.png' %}" alt="нет фото">
+                        {% endthumbnail %}
+                        </td>
+                        <td colspan="2">
+                        <strong class="list-group-item-heading">{{ companion.username }}</strong>
+                        <small style="font-size:9px;">{{ last_message.pub_date|date:'d E Y [H:m]' }}</small>
+                        </td>
+                    </tr>
+                {% if companion != last_message.author or last_message.is_readed %}
+                    <tr valign="middle">
+                        <td width="10%" align="center">
+                        {% thumbnail last_message.author.profile.avatar "x800" crop="center" as small_comm %}
+                        <img width="20px" height="auto" class="img-fluid rounded" src="{{ small_comm.url }}">
+                        {% empty %}
+                        <img width="20px" height="auto" lass="img-fluid rounded" src="{% static 'img/no_img.png' %}" alt="нет фото">
+                        {% endthumbnail %}
+                        </td>
+                        <td>
+                        <a style="color:black;" class="link-light text-decoration-none" href="{{ chat.get_absolute_url }}">
+                        {{ last_message }}</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr valign="middle">
+                        <td width="10%" align="center">
+                            {% thumbnail last_message.author.profile.avatar "x800" crop="center" as small_comm %}
+                            <img width="20px" height="auto" class="img-fluid rounded" src="{{ small_comm.url }}">
+                            {% empty %}
+                            <img width="20px" height="auto" lass="img-fluid rounded" src="{% static 'img/no_img.png' %}" alt="нет фото">
+                            {% endthumbnail %}
+                        </td>
+                        <td>
+                            <a style="color:red;" class="link-light text-decoration-none" href="{{ chat.get_absolute_url }}">
+                            {{ last_message }} <span class="badge badge-secondary bg-dark" style="color:white;">{{ qs }}</span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endif %}
+                </table>
+                </div>
+            {% endwith %}
+        {% endif %}
+        
+    {% endfor %}
+    </article>
+</div>
+{% endblock %}

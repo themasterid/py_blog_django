@@ -1,0 +1,60 @@
+{% load static %}
+{% load thumbnail %}
+{% load cache %}
+{% cache 20 aside_list all_posts comments groups users %}
+<div class="alert alert-info" role="alert">
+    <strong>Последние посты</strong>
+</div>
+{% for post in all_posts %}
+    <div class="alert alert-light shadow-lg p-2 mb-2 rounded" role="alert">
+        <a href="{% url 'posts:post_detail' post.id %}" class="link-light text-decoration-none" style="color: black;"
+        data-toggle="tooltip" data-placement="top"
+        title="Посмотреть запись">
+        <strong>{{ post.title|truncatewords:5 }}</strong>
+        </a>
+    </div>
+{% endfor %}
+<div class="alert alert-info" role="alert">
+<strong>Последние комментарии</strong>
+</div>
+{% for comment in comments %}
+    <div class="alert alert-light shadow-lg p-2 mb-2 rounded" role="alert">
+        <a href="{% url 'posts:post_detail' comment.post.id %}" class="link-light text-decoration-none" style="color: black;"
+        data-toggle="tooltip" data-placement="top"
+        title="Посмотреть комментарий">
+        <strong>{{ comment.text|safe|truncatewords:10 }}</strong>
+        </a>
+        <p style="font-size: 12px;">{{ comment.updated|date:'d E Y' }}</p>
+    </div>
+{% endfor %}
+<div class="alert alert-info" role="alert">
+<strong>Все группы</strong>
+</div>
+{% for name in groups %}
+<div class="alert alert-light shadow-lg p-2 mb-2 rounded" role="alert">
+    <strong>
+    <a href="{% url 'posts:group_list' name.slug %}" class="link-light text-decoration-none" style="color: black;"
+    data-toggle="tooltip" data-placement="top"
+    title="Посмотреть группу {{ name }}">
+    {{ name }}
+    </a>
+    </strong>
+    {{ name.description|linebreaks }}
+</div>
+{% endfor %}
+<div class="alert alert-info" role="alert">
+<strong>ТОП-5 авторов</strong>
+</div>
+{% for user in users %}
+<div class="alert alert-light shadow-lg p-2 mb-2 rounded" role="alert">
+<a href="{% url 'posts:profile' user.0 %}" class="link-light text-decoration-none" style="color: black;"
+data-toggle="tooltip" data-placement="top"
+title="Посмотреть профиль {% if user.0.get_full_name %}{{ user.0.get_full_name }}{% else %}{{ user.0 }}{% endif %}">
+<strong>
+{% if user.0.get_full_name %}{{ user.0.get_full_name }}{% else %}{{ user.0 }}{% endif %}
+[{{ user.1 }}]
+</strong>
+</a>
+</div>
+{% endfor %}
+{% endcache %}

@@ -1,0 +1,21 @@
+{% load static %}
+{% load thumbnail %}
+{% url 'users:profile' message_item.author.username as the_user_url%}
+<!--
+<div class="list-group-item { % if not message_item.is_readed % }unreaded{ % endif % }">
+-->
+<div class="container justify-content-center">
+    <div class="card mt-1 mb-2 ml-auto">
+            <div class="d-flex flex-row p-2 ml-auto">
+                {% thumbnail message_item.author.profile.avatar "x800" crop="center" upscale=True as small_comm %}
+                <img width="80px;" height="80px;" class="img-fluid rounded" src="{{ small_comm.url }}">
+                {% empty %}
+                <img width="80px;" height="80px;" lass="img-fluid rounded" src="{% static 'img/no_img.png' %}" alt="нет фото">
+                {% endthumbnail %}
+                <div class="chat ml-auto p-2">
+                    {{ message_item.message|safe }}
+                    <p class="small text-muted">{{ message_item.pub_date|date:'d E Y' }}</p>
+                </div>
+            </div>
+    </div>
+</div>

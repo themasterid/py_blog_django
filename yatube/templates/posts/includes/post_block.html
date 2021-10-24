@@ -1,0 +1,49 @@
+{% load thumbnail %}
+{% load static %}
+<div class="card shadow-lg p-1 mb-1 bg-white rounded" style="width: 100%">
+    {% thumbnail post.image "960x239" crop="center" upscale=True as im %}
+        <a href="{% url 'posts:post_detail' post.id %}" class="link-light text-decoration-none" style="color: black;">
+        <img class="card-img-top" src="{{ im.url }}">
+        </a>
+    {% endthumbnail %}
+    <div class="card-body">
+        <h4 class="card-title p-1 mb-1 bg-white rounded">
+        <a href="{% url 'posts:post_detail' post.id %}" class="link-light text-decoration-none" style="color: black;">
+        {{ post.title }}
+        </a>
+        | <a href="{% url "posts:post_share" post.id %}" class="link-light text-decoration-none">
+        <img src="{% static 'img/send_email.png' %}" width='24px;' height='24px;' alt="Поделиться постом"
+        data-toggle="tooltip" data-placement="top" title="Поделиться постом">
+        </a> |
+        {% if request.user == post.author %}
+        <a href="{% url 'posts:edit' post.id %}" class="link-light text-decoration-none">
+        <img src="{% static 'img/edit_btn.gif' %}" width='24px;' height='24px;' data-toggle="tooltip" data-placement="top" title="Редактировать пост">
+        </a> |
+        <a href="{% url 'posts:edit' post.id %}" class="link-light text-decoration-none"  data-toggle="modal" data-target="#exampleModalCenter">
+        <img src="{% static 'img/delete_btn.gif' %}" width='24px;' height='24px;' data-toggle="tooltip" data-placement="top" title="Удалить пост">
+        </a> | {% if not post.status %} Не опубликован {% endif %}
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Удаление записи!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                Вы действительно ходите удалить запись?
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Закрыть</button>
+                <a href="{% url 'posts:delete' post.id %}"><button type="button" class="btn btn-outline-danger btn-sm">Удалить запись</button></a>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endif %}
+        </h4>
+        <hr>
+        <p class="card-text">{{ post.text|safe|linebreaks|truncatewords:40 }}</p>
+    </div>
+</div>

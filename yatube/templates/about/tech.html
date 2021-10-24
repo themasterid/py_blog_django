@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Технологии{% endblock %}
+{% block content %}
+
+<div class="row p-2 mb-2 shadow-lg rounded bg-light">
+  
+  <div class="card p-2 mb-2">
+    <div class="card-body">
+      <h1 class="card-title">Технологии</h1>
+    </div>
+  </div>
+
+  <aside class="col-12 col-md-3 p-1">
+      <div class="list-group">
+        <a href="https://www.python.org/downloads/" class="list-group-item list-group-item-action" target="_blank">Python</a>
+        <a href="https://www.djangoproject.com/" class="list-group-item list-group-item-action" target="_blank">Django</a>
+        <a href="https://getbootstrap.com/" class="list-group-item list-group-item-action" target="_blank">Bootstrap 4</a>
+        <a href="https://django-ckeditor.readthedocs.io/en/latest/" class="list-group-item list-group-item-action" target="_blank">CKEditor</a>
+        <a href="#" class="list-group-item list-group-item-action disabled" target="_blank">HTML5</a>
+        <a href="#" class="list-group-item list-group-item-action disabled" target="_blank">CSS</a>
+        <a href="#" class="list-group-item list-group-item-action disabled" target="_blank">JS</a>
+      </div>
+  </aside>
+
+  <article class="col-12 col-md-9 p-2 mb-2">
+    <div class="card shadow-lg p-1 mb-1 rounded bg-light">
+      <div class="card-body">
+        <div class="row">
+              <h4 class="alert-heading">Проект блог социальная сеть PyBlog</h4>
+              <p align="justify">В этом блоге можно создавать посты, подписываться на других авторов, комментировать записи, делиться фотографиями и информацией в нужных вам группах.
+              На данный момент реализована возможность создать и удалить запись, отредактировать ее, и разместить на сайте.
+              Также реализована возможность регистрации пользователей, восстановления паролей (отправка на почту не реализована).
+              Система учета доступа пользователей. Для редактирования записей реализовали редактор CKEditor, это удобно.
+              Это только начало пути, по мере развития проекта, информация о новых возможностях будет публиковаться в этом разделе.
+              </p>
+              <hr>
+              <p class="mb-0">Все вопросы, а также подробная информация и контактные данные можно найти в разделе "Об авторе"</p>
+        </div>
+      </div>
+    </div>  
+  </article>
+</div>
+{% endblock %}

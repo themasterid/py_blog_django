@@ -2,10 +2,20 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+secret_settings.txt
+yatube/yatube_cache/
+yatube/yatube/secret_email.py
+_db.sqlite3
+*.sqlite3
+py_db.sqlite3
 # C extensions
 *.so
-
+*.bat
+yatube/static/
+*.png
+*.ico
+*.css
+media/
 # Distribution / packaging
 .Python
 build/
@@ -127,3 +137,26 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Папки, создаваемые средой разработки
+.idea
+.DS_Store
+.AppleDouble
+.LSOverride
+
+*.sublime-project
+*.sublime-workspace
+
+.vscode/
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+
+.mypy_cache
+
+# папки со статикой и медиа
+static/
+yatube/posts/static/
+yatube/media/
+
