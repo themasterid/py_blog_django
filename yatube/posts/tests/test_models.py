@@ -12,13 +12,15 @@ class PostModelTest(TestCase):
         super().setUpClass()
         cls.user = User.objects.create_user(username='auth')
         cls.post = Post.objects.create(
+            title='Тестовый заголовок больше 15 символов для проверки...',
             text='Тестовый текст больше 15 символов для проверки...',
             author=cls.user,
         )
 
     def test_post_str(self):
         """Проверка __str__ у post."""
-        self.assertEqual(self.post.text[:15], str(self.post))
+        self.assertEqual(self.post.title[:15], str(self.post))
+        self.assertEqual(self.post.text, str(self.post))
 
     def test_post_verbose_name(self):
         """Проверка verbose_name у post."""
@@ -35,7 +37,7 @@ class PostModelTest(TestCase):
     def test_post_help_text(self):
         """Проверка help_text у post."""
         feild_help_texts = {
-            'text': 'Текст нового поста',
+            'text': '<br>Текст нового поста',
             'group': 'Группа, к которой будет относиться пост', }
         for value, expected in feild_help_texts.items():
             with self.subTest(value=value):
@@ -124,7 +126,7 @@ class CommentModelTest(TestCase):
         field_verboses = {
             'post': 'Пост',
             'author': 'Автор',
-            'text': 'Коментарий',
+            'text': 'Комментарий',
             'created': 'Создан',
             'updated': 'Обнавлен',
             'active': 'Активен',

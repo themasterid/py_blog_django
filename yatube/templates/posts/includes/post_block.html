@@ -1,49 +1,73 @@
 {% load thumbnail %}
 {% load static %}
-<div class="card shadow-lg p-1 mb-1 bg-white rounded" style="width: 100%">
-    {% thumbnail post.image "960x239" crop="center" upscale=True as im %}
-        <a href="{% url 'posts:post_detail' post.id %}" class="link-light text-decoration-none" style="color: black;">
-        <img class="card-img-top" src="{{ im.url }}">
-        </a>
-    {% endthumbnail %}
+<div class="card p-1 mb-2 bg-white rounded" style="width: 100%">
+    <ul class="list-group p-1 mb-2 list-group-flush">
+        {% include 'posts/includes/ul_posts.html' %}
+        {% thumbnail post.image "960x239" crop="center" upscale=True as im %}
+            <a href="{% url 'posts:post_detail' post.id %}" class="link-light text-decoration-none" style="color: black;">
+            <img class="card-img-top" src="{{ im.url }}">
+            </a>
+        {% endthumbnail %}
+        <li class="list-group-item list-group-item-light d-flex justify-content-between">
+        <span>
+            <h4>
+            <a href="{% url 'posts:post_detail' post.id %}" class="link-light text-decoration-none" style="color: black;">
+            {{ post.title }}
+            </a>
+            </h4>
+        </span>
+        <span>
+            <a href="{% url "posts:post_share" post.id %}" class="link-light text-decoration-none">
+            <img src="{% static 'img/send_email.png' %}" width='24px;' height='24px;' alt="Поделиться постом"
+            data-toggle="tooltip" data-placement="top" title="Поделиться постом">
+            </a>
+            {% if request.user == post.author %}
+                |
+                <a href="{% url 'posts:edit' post.id %}" class="link-light text-decoration-none">
+                <img src="{% static 'img/edit_btn.gif' %}" width='24px;' height='24px;' data-toggle="tooltip" data-placement="top" title="Редактировать пост">
+                </a> |
+                <a href="{% url 'posts:delete' post.id %}" class="link-light text-decoration-none"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <img src="{% static 'img/delete_btn.gif' %}" width='24px;' height='24px;' data-toggle="tooltip" data-placement="top" title="Удалить пост">
+                </a>
+                {% if not post.status %} Не опубликован {% endif %}
+                <div 
+                    class="modal fade"
+                    id="exampleModal"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Удаление записи!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        Вы действительно ходите удалить запись?
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Закрыть</button>
+                        <a href="{% url 'posts:delete' post.id %}"><button type="button" class="btn btn-outline-danger btn-sm">Удалить запись</button></a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            {% endif %}
+        </span>
+        </li>
+    </ul>
     <div class="card-body">
-        <h4 class="card-title p-1 mb-1 bg-white rounded">
-        <a href="{% url 'posts:post_detail' post.id %}" class="link-light text-decoration-none" style="color: black;">
-        {{ post.title }}
-        </a>
-        | <a href="{% url "posts:post_share" post.id %}" class="link-light text-decoration-none">
-        <img src="{% static 'img/send_email.png' %}" width='24px;' height='24px;' alt="Поделиться постом"
-        data-toggle="tooltip" data-placement="top" title="Поделиться постом">
-        </a> |
-        {% if request.user == post.author %}
-        <a href="{% url 'posts:edit' post.id %}" class="link-light text-decoration-none">
-        <img src="{% static 'img/edit_btn.gif' %}" width='24px;' height='24px;' data-toggle="tooltip" data-placement="top" title="Редактировать пост">
-        </a> |
-        <a href="{% url 'posts:edit' post.id %}" class="link-light text-decoration-none"  data-toggle="modal" data-target="#exampleModalCenter">
-        <img src="{% static 'img/delete_btn.gif' %}" width='24px;' height='24px;' data-toggle="tooltip" data-placement="top" title="Удалить пост">
-        </a> | {% if not post.status %} Не опубликован {% endif %}
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Удаление записи!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                Вы действительно ходите удалить запись?
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Закрыть</button>
-                <a href="{% url 'posts:delete' post.id %}"><button type="button" class="btn btn-outline-danger btn-sm">Удалить запись</button></a>
-                </div>
-            </div>
-            </div>
-        </div>
-        {% endif %}
-        </h4>
-        <hr>
         <p class="card-text">{{ post.text|safe|linebreaks|truncatewords:40 }}</p>
     </div>
+    <ul class="list-group p-1 mb-2 list-group-flush">
+        <li class="list-group-item list-group-item-light">
+        <a href="{% url 'posts:post_detail' post.id %}"><button type="button" class="btn btn-outline-primary btn-sm">Подробная информация</button></a>
+        {% if post.group %}
+            <a href="{% url 'posts:group_list' post.group.slug %}"><button type="button" class="btn btn-outline-primary btn-sm">Все записи группы {{ post.group }}</button></a>
+        {% endif %}
+        <a href="{% url 'posts:post_detail' post.id %}"><button type="button" class="btn btn-outline-primary btn-sm">Комментариев: <strong>{{ post.comments.count }}</strong></button></a>
+        <a href="{% url 'posts:post_detail' post.id %}"><button type="button" class="btn btn-outline-primary btn-sm">Лайков: <strong>{{ post.likes.count }}</strong></button></a>
+        <img width="24" height="24" class="rounded img-fluid" src="{% static 'img/views_posts.png' %}" alt="Просмотров"> <strong>{{post.total_views}}</strong>
+        </li>
+    </ul>
 </div>

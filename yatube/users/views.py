@@ -13,20 +13,10 @@ class DialogsView(View):
     def get(self, request):
         chats = Chat.objects.filter(
             members__in=[request.user.id])
-        qs = chats.filter(
-            message__is_readed=False,
-            members=request.user
-        ).select_related('message')
-        qs = qs.count() - chats.count()
-        if qs < 1:
-            qs = 1
-        else:
-            qs += 1
         template = 'users/dialogs.html'
         context = {
             'user_profile': request.user,
-            'chats': chats,
-            'qs': qs}
+            'chats': chats}
         return render(request, template, context)
 
 

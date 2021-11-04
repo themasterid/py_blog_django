@@ -1,5 +1,3 @@
-# from operator import itemgetter
-
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -29,8 +27,7 @@ def get_post_like(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
-    else:
-        post.likes.add(request.user)
+    post.likes.add(request.user)
     return redirect('posts:post_detail', post_id)
 
 
@@ -42,8 +39,7 @@ class SearchResultsView(ListView):
     def get_queryset(self):
         query = self.request.GET.get('q')
         return Post.objects.filter(
-            Q(text__icontains=query) | Q(title__icontains=query)
-        ).filter(status=True)
+            Q(text__icontains=query) | Q(title__icontains=query))
 
 
 def get_paginator(request, req):
@@ -107,9 +103,8 @@ def profile(request, username):
 def post_detail(request, post_id):
     likes_connected = get_object_or_404(
         Post, id=post_id)
-    post_is_liked = False
-    if likes_connected.likes.filter(id=request.user.id).exists():
-        post_is_liked = True
+    post_is_liked = bool(
+        likes_connected.likes.filter(id=request.user.id).exists())
     post = get_object_or_404(Post, id=post_id)
     profile = get_object_or_404(Profile, user=post.author)
     comments_details = post.comments.all()
@@ -117,12 +112,11 @@ def post_detail(request, post_id):
     author = get_object_or_404(User, username=post.author)
     following = request.user.is_authenticated
     ip = get_client_ip(request)
-    if Ip.objects.filter(ip=ip).exists():
-        post.views.add(Ip.objects.get(ip=ip))
-    else:
-        Ip.objects.create(ip=ip)
-        post.views.add(Ip.objects.get(ip=ip))
 
+    if not Ip.objects.filter(ip=ip).exists():
+        Ip.objects.create(ip=ip)
+    
+    post.views.add(Ip.objects.get(ip=ip))
     if following:
         following = author.following.filter(user=request.user).exists()
     template = 'posts/post_detail.html'
@@ -235,19 +229,6 @@ def profile_unfollow(request, username):
         profile_follow.delete()
     return redirect('posts:profile', username=username)
 
-
-'''
-@login_required
-def profile_unfollow(request, username):
-    user_follower = get_object_or_404(
-        Follow,
-        user=request.user,
-        author__username=username
-    )
-    if user_follower.exists():
-        user_follower.delete()
-    return redirect('posts:profile', username)
-'''
 
 
 @login_required

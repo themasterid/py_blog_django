@@ -7,7 +7,7 @@
 {% block content %}
 <div class="row shadow-lg p-2 mb-2 bg-white rounded">
     <aside class="col-12 col-md-3 shadow-lg p-2 mb-2 bg-white rounded">
-    {% include 'posts/includes/aside.html' %} 
+    {% include 'posts/includes/aside.html' %}
     {% include 'posts/includes/aside_list.html' %}
     </aside>
     <article class="col-12 col-md-9">
@@ -58,7 +58,9 @@
                         </td>
                         <td>
                             <a style="color:red;" class="link-light text-decoration-none" href="{{ chat.get_absolute_url }}">
-                            {{ last_message }} <span class="badge badge-secondary bg-dark" style="color:white;">{{ qs }}</span>
+                            <button type="button" class="btn btn-light">
+                            {{ last_message }} <span class="badge bg-secondary">Новое</span>
+                            </button>
                             </a>
                         </td>
                     </tr>

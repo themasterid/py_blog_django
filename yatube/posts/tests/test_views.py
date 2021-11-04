@@ -157,8 +157,8 @@ class PaginatorViewsTest(TestCase):
 
     def test_paginator_on_pages(self):
         """Проверка пагинации на страницах."""
-        posts_on_first_page = 10
-        posts_on_second_page = 3
+        posts_on_first_page = 5
+        posts_on_second_page = 5
         url_pages = [
             reverse('posts:index'),
             reverse('posts:group_list', kwargs={'slug': self.group.slug}),

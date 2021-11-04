@@ -1,30 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Подписки{% endblock %}
+{% block title %}Избранные авторы{% endblock %}
 {% block content %}
-<div class="row shadow-lg p-2 mb-2 bg-white rounded">
-<aside class="col-12 col-md-3 shadow-lg p-2 mb-2 bg-white rounded">
-{% include 'posts/includes/aside.html' %} 
-{% include 'posts/includes/aside_list.html' %}
-</aside>
-<article class="col-12 col-md-9">
-<div class="row shadow-lg p-2 mb-2 bg-white rounded">
-  {% include 'posts/includes/switcher.html' with follow=True %}
-  {% for post in page_obj %}
-    {% include 'posts/includes/ul_posts.html' %}
-    {% include 'posts/includes/post_block.html' %}
-        <div class="card-body shadow-lg p-2 mb-2 bg-white rounded">
-            <a href="{% url 'posts:post_detail' post.id %}"><button type="button" class="btn btn-outline-primary btn-sm">Подробная информация</button></a>  
-            {% if post.group %}
-            <a href="{% url 'posts:group_list' post.group.slug %}"><button type="button" class="btn btn-outline-primary btn-sm">Все записи группы {{ post.group }}</button></a>
-            {% endif %}
-            <a href="{% url 'posts:post_detail' post.id %}"><button type="button" class="btn btn-outline-primary btn-sm">Комментариев: <strong>{{ post.comments.count }}</strong></button></a>
-            <img width="24" height="24" class="rounded img-fluid" src="{% static 'img/views_posts.png' %}" alt="нет фото"> <strong>{{post.total_views}}</strong>
-        </div>
-    {% if not forloop.last %}<hr>{% endif %}
-  {% endfor %}
-  {% include 'posts/includes/paginator.html' %}
-</div>
-</article>
+<div class="row p-2 mb-2 bg-white rounded">
+  <aside class="col-12 col-md-3 shadow-lg p-2 mb-2 bg-white rounded">
+  {% include 'posts/includes/aside.html' %} 
+  {% include 'posts/includes/aside_list.html' %}
+  </aside>
+  <article class="col-12 col-md-9">
+    <div class="row p-2 mb-2 bg-white rounded">
+      {% include 'posts/includes/switcher.html' with follow=True %}
+      {% for post in page_obj %}
+        {% include 'posts/includes/post_block.html' %}
+      {% endfor %}
+      {% include 'posts/includes/paginator.html' %}
+    </div>
+  </article>
 </div>
 {% endblock %}

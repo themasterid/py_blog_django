@@ -4,36 +4,22 @@
 {% load static %}
 {% load thumbnail %}
 <div class="row p-2 mb-2 bg-white rounded">
-<aside class="col-12 col-md-3 p-2 mb-2 bg-white rounded">
-{% include 'posts/includes/aside.html' %} 
-{% include 'posts/includes/aside_list.html' %}
-</aside>
-<article class="col-12 col-md-9">
-<div class="row p-2 mb-2 bg-white rounded">
-  {% include 'posts/includes/switcher.html' with index=True %}
-  {% load cache %}
-  {% cache 1 index_page page_obj %}
-  {% for post in page_obj %}
-    {% include 'posts/includes/ul_posts.html' %}
-    {% include 'posts/includes/post_block.html' %}
-
-    <ul class="list-group p-2 mb-2 bg-white rounded">
-      <li class="list-group-item list-group-item-light">
-      <a href="{% url 'posts:post_detail' post.id %}"><button type="button" class="btn btn-outline-primary btn-sm">Подробная информация</button></a>
-      {% if post.group %}
-        <a href="{% url 'posts:group_list' post.group.slug %}"><button type="button" class="btn btn-outline-primary btn-sm">Все записи группы {{ post.group }}</button></a>
-      {% endif %}
-      <a href="{% url 'posts:post_detail' post.id %}"><button type="button" class="btn btn-outline-primary btn-sm">Комментариев: <strong>{{ post.comments.count }}</strong></button></a>
-      <a href="{% url 'posts:post_detail' post.id %}"><button type="button" class="btn btn-outline-primary btn-sm">Лайков: <strong>{{ post.likes.count }}</strong></button></a>
-      <img width="24" height="24" class="rounded img-fluid" src="{% static 'img/views_posts.png' %}" alt="Просмотров"> <strong>{{post.total_views}}</strong>
-      </li>
-    </ul>
-
-    {% if not forloop.last %}{% endif %}
-  {% endfor %}
-  {% endcache %}
-  {% include 'posts/includes/paginator.html' %}
-</div>
-</div>
+  <aside class="col-12 col-md-3 p-2 mb-2 bg-white rounded">
+  {% include 'posts/includes/aside.html' %} 
+  {% include 'posts/includes/aside_list.html' %}
+  </aside>
+  <article class="col-12 col-md-9">
+    <div class="row p-2 mb-2 bg-white rounded">
+      {% include 'posts/includes/switcher.html' with index=True %}
+      {% load cache %}
+      {% cache 20 index_page page_obj %}
+      {% for post in page_obj %}
+        {% include 'posts/includes/post_block.html' %}
+        {% if not forloop.last %}{% endif %}
+      {% endfor %}
+      {% endcache %}
+      {% include 'posts/includes/paginator.html' %}
+    </div>
+  </article>
 </div>
 {% endblock %}

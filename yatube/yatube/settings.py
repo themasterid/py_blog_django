@@ -16,16 +16,25 @@ ALLOWED_HOSTS = [
     '*',
 ]
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
 '''
 EMAIL_HOST = 'smtp.gmail.com'
+
 EMAIL_HOST_USER = EMAILHOST_USER
+
 EMAIL_HOST_PASSWORD = EMAILHOST_PASSWORD
+
 EMAIL_PORT = 587
+
 EMAIL_USE_TLS = True
 '''
 
@@ -64,7 +73,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'yatube.urls'
+
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -120,26 +131,38 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'ru'
+
 TIME_ZONE = 'UTC'
+
 USE_I18N = True
+
 USE_L10N = False
+
 USE_TZ = True
+
 DATE_FORMAT = 'd E Y'
 
 STATIC_URL = '/static/'
+
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
+
 NUMBER_POST = 5
+
 MEDIA_URL = '/media/'
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 INTERNAL_IPS = ('127.0.0.1', '192.168.0.1',)
+
 CKEDITOR_UPLOAD_PATH = 'uploads/'
+
 CKEDITOR_IMAGE_BACKEND = 'pillow'
 
 CKEDITOR_CONFIGS = {
     'default': {
-        # 'skin': 'moono',
-        # 'skin': 'office2013',
+        'skin': 'moono',
         'toolbar_Basic': [
             ['Source', '-', 'Bold', 'Italic']
         ],
@@ -147,16 +170,10 @@ CKEDITOR_CONFIGS = {
             {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
             {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
             {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
-            # {'name': 'forms',
-            #  'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
-            #            'HiddenField']},
-            # '/',
             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
             {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
-            {'name': 'basicstyles',
-            'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
-            {'name': 'paragraph',
-            'items': [
+            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph', 'items': [
                 'NumberedList',
                 'BulletedList',
                 '-', 'Outdent',
@@ -174,25 +191,17 @@ CKEDITOR_CONFIGS = {
                 'BidiRtl',
             ]},
             {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
-            {'name': 'insert',
-            'items': ['Image', 'Youtube', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
-            {'name': 'tools', 'items': ['Maximize',]},
+            {'name': 'insert', 'items': ['Image', 'Youtube', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            {'name': 'tools', 'items': ['Maximize', ]},
         ],
-        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
+        'toolbar': 'YourCustomToolbarConfig',
         'height': 300,
         'width': '100%',
         'toolbarCanCollapse': False,
         'forcePasteAsPlainText': True,
-        # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
-        # 'height': 291,
-        # 'width': '100%',
-        # 'filebrowserWindowHeight': 725,
-        # 'filebrowserWindowWidth': 940,
-        # 'toolbarCanCollapse': True,
-        # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'uploadimage',  # the upload image feature
+            'uploadimage',
             'div',
             'autolink',
             'youtube',
@@ -211,6 +220,9 @@ CKEDITOR_CONFIGS = {
 }
 
 CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
+
 CKEDITOR_RESTRICT_BY_USER = True
+
 CKEDITOR_BROWSE_SHOW_DIRS = True
+
 AWS_QUERYSTRING_AUTH = False
