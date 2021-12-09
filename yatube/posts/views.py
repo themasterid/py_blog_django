@@ -27,6 +27,7 @@ def get_post_like(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
+        return redirect('posts:post_detail', post_id)
     post.likes.add(request.user)
     return redirect('posts:post_detail', post_id)
 
