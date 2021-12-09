@@ -115,7 +115,7 @@ def post_detail(request, post_id):
 
     if not Ip.objects.filter(ip=ip).exists():
         Ip.objects.create(ip=ip)
-    
+
     post.views.add(Ip.objects.get(ip=ip))
     if following:
         following = author.following.filter(user=request.user).exists()

@@ -15,10 +15,9 @@
 {% endwith %}
 {% endif %}
 
-
 {% if request.user.is_authenticated %}
     {% with request.resolver_match.view_name as view_name %}
-        {% if view_name == 'index:index' %}
+        {% if request.user == "brootos" %}
             <div class="list-group">
             <a href="{% url 'posts:profile' user.username %}" class="list-group-item list-group-item-action list-group-item-light">
             Профиль <span class="badge rounded-pill bg-danger">{{ user.get_full_name }}</span>
@@ -66,7 +65,7 @@
         {% endif %}
 
         {% if request.user.is_authenticated %}
-            {% if view_name == 'index:profile' and request.user != author and author %}
+            {% if view_name == 'index:profile' %}
             <div class="card p-2 mb-2 rounded">
                 {% if request.user.id != author.id %}
                 <a class="btn btn-lg btn-outline-danger btn-sm" href="{% url 'users:create_dialog' author.id %}" role="button">Написать сообщение</a>
@@ -110,7 +109,8 @@
                     Имя: <strong>{% if request.user.get_full_name %}{{ request.user.get_full_name }}<hr>{% else %}{{ request.user }}<hr>{% endif %}</strong>
                     {% if request.user.profile.location %}Проживание: <strong>{{ request.user.profile.location }}</strong><hr>{% endif %}
                     {% if request.user.profile.bio %}О себе: <strong>{{ request.user.profile.bio }}</strong><hr>{% endif %}
-                    {% if request.user.profile.birth_date %}Дата рождения: <strong>{{ request.user.profile.birth_date }}</strong>{% endif %}
+                    {% if request.user.profile.birth_date %}Дата рождения: <strong>{{ request.user.profile.birth_date }}</strong><hr>{% endif %}
+                    {% if request.user.last_login %}Последний визит: <strong>{{ request.user.last_login|date:'d E Y' }}</strong>{% endif %}
                     </div>
                 </div>
             </div>
