@@ -1,4 +1,3 @@
-# yatube/urls.py
 from ckeditor_uploader import views as ckeditor_views
 from django.conf import settings
 from django.conf.urls.static import static

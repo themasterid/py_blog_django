@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+DATE_FORMAT = "%d.%m.%Y"
+
 
 class Chat(models.Model):
     DIALOG = 'D'
@@ -84,8 +86,9 @@ class Profile(models.Model):
         blank=True,
         verbose_name='Фото',
         help_text='Ваша фотография')
-    is_online = models.BooleanField(
-        default=False)
+    last_online = models.DateTimeField(
+        blank=True,
+        null=True)
 
     class Meta:
         verbose_name_plural = 'Профили'
@@ -93,6 +96,33 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+    def is_online(self):
+        if self.last_online:
+            time_delta = timezone.timedelta(minutes=60)
+            time_now = timezone.now() - self.last_online
+            return time_now < time_delta
+        return False
+
+    def get_online_info(self):
+        if self.is_online():
+            return _('Онлайн')
+        if self.last_online:
+            date = self.last_online.date().strftime(DATE_FORMAT)
+            return _(f'Последний визит {date}')
+        return _('Неизвестно')
+
+
+@receiver(post_save, sender=User)
+def update_user_profile(sender, instance, **kwargs):
+    try:
+        user = Profile.objects.get(pk=instance.pk)
+        user.last_online = timezone.now()
+        user.save(update_fields=['last_online'])
+        instance.profile.save()
+        return user
+    except User.DoesNotExist:
+        return None
 
 
 @receiver(post_save, sender=User)

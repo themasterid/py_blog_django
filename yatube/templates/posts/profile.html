@@ -21,10 +21,14 @@
                 <h1 class="card-title">
                     Автор: {{ author.get_full_name }}
                 </h1>
-                {% if author.profile.is_online %}
-                <strong style="color: green";>Сейчас на сайте</strong>
+                {% if author.profile.get_online_info == "Онлайн" %}
+                    <small style="color: green">
+                        {{ author.profile.get_online_info }}
+                    </small>
                 {% else %}
-                <strong style="color: black";>Последнее посещение {{ author.last_login|date:'d E Y' }}</strong>
+                    <small style="color: red">
+                        {{ author.profile.get_online_info }}
+                    </small>
                 {% endif %}
                 <p class="card-text">
                 | Всего записей: <strong>{{ author.posts.count }}</strong> | 

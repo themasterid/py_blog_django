@@ -67,12 +67,19 @@
     {{ user.1 }}
     </span>
     </strong>
-    {% if user.0.profile.is_online %}
-        <strong style="color: green";><br>Сейчас на сайте</strong>
+    {% if user.0.profile.get_online_info == "Онлайн" %}
+        <br>
+        <small style="color: green";>
+            {{ user.0.profile.get_online_info }}
+        </small>
     {% else %}
-        <small><br>{{ user.0.last_login|date:'d E Y' }}</small>
+        <br>
+        <small style="color: red">
+            {{ user.0.profile.get_online_info }}
+        </small>
     {% endif %}
     </a>
+
 {% endfor %}
 </div>
 {% endcache %}
