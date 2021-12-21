@@ -60,6 +60,7 @@ class Message(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(
         User,
+        related_name='profile',
         on_delete=models.CASCADE,
         verbose_name='Пользователь')
     bio = models.TextField(
@@ -83,6 +84,8 @@ class Profile(models.Model):
         blank=True,
         verbose_name='Фото',
         help_text='Ваша фотография')
+    is_online = models.BooleanField(
+        default=False)
 
     class Meta:
         verbose_name_plural = 'Профили'
