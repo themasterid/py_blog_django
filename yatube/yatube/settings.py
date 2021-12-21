@@ -172,7 +172,7 @@ CKEDITOR_CONFIGS = {
             {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
             {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
-            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'basicstyles', 'items': ['CodeSnippet', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
             {'name': 'paragraph', 'items': [
                 'NumberedList',
                 'BulletedList',
@@ -201,6 +201,7 @@ CKEDITOR_CONFIGS = {
         'forcePasteAsPlainText': True,
         'tabSpaces': 4,
         'extraPlugins': ','.join([
+            'codesnippet',
             'uploadimage',
             'div',
             'autolink',

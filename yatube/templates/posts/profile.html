@@ -18,7 +18,14 @@
     <article class="col-12 col-md-9">
         <div class="card rounded p-2 mb-2 bg-light text-dark">
             <div class="card-body">
-                <h1 class="card-title">Автор: {{ author.get_full_name }}</h1>
+                <h1 class="card-title">
+                    Автор: {{ author.get_full_name }}
+                </h1>
+                {% if author.profile.is_online %}
+                <strong style="color: green";>Сейчас на сайте</strong>
+                {% else %}
+                <strong style="color: black";>Последнее посещение {{ author.last_login|date:'d E Y' }}</strong>
+                {% endif %}
                 <p class="card-text">
                 | Всего записей: <strong>{{ author.posts.count }}</strong> | 
                 Всего комментариев: <strong>{{ author.comments.count }}</strong> | 
