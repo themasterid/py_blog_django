@@ -30,7 +30,6 @@ class ProfileAdmin(admin.ModelAdmin):
         'birth_date',
         'get_image',
     )
-    # list_editable = ('bio',)
     search_fields = ('location',)
     list_filter = ('birth_date',)
     empty_value_display = '-пусто-'
