@@ -26,6 +26,7 @@ class ProfileAdmin(admin.ModelAdmin):
         'pk',
         'user',
         'bio',
+        'genre',
         'location',
         'birth_date',
         'get_image',

@@ -7,6 +7,10 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 DATE_FORMAT = "%d.%m.%Y"
+GENRE_CHOICES = (
+    ('m', 'Мужчина'),
+    ('w', 'Женщина'),
+)
 
 
 class Chat(models.Model):
@@ -70,16 +74,20 @@ class Profile(models.Model):
         blank=True,
         verbose_name='О себе',
         help_text='Информация о себе')
+    genre = models.CharField(
+        max_length=1,
+        choices=GENRE_CHOICES,
+        null=True)
     location = models.CharField(
         max_length=30,
         blank=True,
         verbose_name='Местоположение',
         help_text='Страна проживания')
     birth_date = models.DateField(
-        null=True,
         blank=True,
+        null=True,
         verbose_name='Дата рождения',
-        help_text='Ваша дата рождения')
+        help_text='Ваша дата рождения (ГГГГ-ММ-ДД)')
     avatar = models.ImageField(
         upload_to='avatars/',
         null=True,
@@ -112,25 +120,15 @@ class Profile(models.Model):
             return _(f'Последний визит {date}')
         return _('Неизвестно')
 
-
-@receiver(post_save, sender=User)
-def update_user_profile(sender, instance, **kwargs):
-    try:
-        user = Profile.objects.get(pk=instance.pk)
-        user.last_online = timezone.now()
-        user.save(update_fields=['last_online'])
-        instance.profile.save()
-        return user
-    except User.DoesNotExist:
-        return None
-
-
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+    try:
+        user = Profile.objects.get(id=instance.id)
+        user.last_online = timezone.now()
+        user.save(update_fields=['last_online'])
+        instance.profile.save()
+        return user
+    except Profile.DoesNotExist:
+        return None

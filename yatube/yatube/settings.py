@@ -1,6 +1,6 @@
 import os
 
-# from .secret_email import EMAILHOST_PASSWORD, EMAILHOST_USER
+from .secret_email import EMAILHOST_PASSWORD, EMAILHOST_USER
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,13 +20,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
-'''
 EMAIL_HOST = 'smtp.gmail.com'
 
 EMAIL_HOST_USER = EMAILHOST_USER
@@ -36,7 +33,6 @@ EMAIL_HOST_PASSWORD = EMAILHOST_PASSWORD
 EMAIL_PORT = 587
 
 EMAIL_USE_TLS = True
-'''
 
 LOGIN_URL = 'users:login'
 

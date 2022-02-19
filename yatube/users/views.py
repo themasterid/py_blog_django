@@ -90,11 +90,7 @@ def update_profile(request):
     if user_form.is_valid() and profile_form.is_valid():
         user_form.save()
         profile_form.save()
-        print('Ваш профиль был успешно обновлен!')
         return redirect('posts:profile', request.user)
-    else:
-        print('Пожалуйста, исправьте ошибки.')
-
     user_form = UserForm(instance=request.user)
     profile_form = ProfileForm(instance=request.user.profile)
     return render(request, 'users/update.html', {
