@@ -1,11 +1,10 @@
 import os
 
-from .secret_email import EMAILHOST_PASSWORD, EMAILHOST_USER
+# from .secret_email import EMAILHOST_PASSWORD, EMAILHOST_USER
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-with open('yatube/secret_settings.txt') as f:
-    SECRET_KEY = f.read().strip()
+SECRET_KEY = "4bhjbafy45ub4h6b4yubgkkrfbvdrbrdbrtthbsbdgf"
 
 DEBUG = True
 
@@ -26,9 +25,9 @@ EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
 EMAIL_HOST = 'smtp.gmail.com'
 
-EMAIL_HOST_USER = EMAILHOST_USER
+# EMAIL_HOST_USER = EMAILHOST_USER
 
-EMAIL_HOST_PASSWORD = EMAILHOST_PASSWORD
+# EMAIL_HOST_PASSWORD = EMAILHOST_PASSWORD
 
 EMAIL_PORT = 587
 
