@@ -16,18 +16,14 @@ except ImportError:
 
 
 def search_field(fields, attname):
-    for field in fields:
-        if attname == field.attname:
-            return field
-    return None
+    return next((field for field in fields if attname == field.attname), None)
 
 
 def search_refind(execution, user_code):
     """Поиск запуска"""
-    for temp_line in user_code.split('\n'):
-        if re.search(execution, temp_line):
-            return True
-    return False
+    return any(
+        re.search(execution, temp_line) for temp_line in user_code.split('\n')
+    )
 
 
 class TestComment:
