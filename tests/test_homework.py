@@ -22,18 +22,14 @@ except ImportError:
 
 
 def search_field(fields, attname):
-    for field in fields:
-        if attname == field.attname:
-            return field
-    return None
+    return next((field for field in fields if attname == field.attname), None)
 
 
 def search_refind(execution, user_code):
     """Поиск запуска"""
-    for temp_line in user_code.split('\n'):
-        if re.search(execution, temp_line):
-            return True
-    return False
+    return any(
+        re.search(execution, temp_line) for temp_line in user_code.split('\n')
+    )
 
 
 class TestPost:
@@ -61,9 +57,9 @@ class TestPost:
         assert type(pub_date_field) == fields.DateTimeField, (
             f'Свойство `{pub_date_field_name}` модели `Post` должно быть датой и временем `DateTimeField`'
         )
-        assert pub_date_field.auto_now_add, (
-            f'Свойство `pub_date` или `created` модели `Post` должно быть `auto_now_add`'
-        )
+        assert (
+            pub_date_field.auto_now_add
+        ), 'Свойство `pub_date` или `created` модели `Post` должно быть `auto_now_add`'
 
         author_field = search_field(model_fields, 'author_id')
         assert author_field is not None, 'Добавьте пользователя, автор который создал событие `author` модели `Post`'
@@ -121,9 +117,10 @@ class TestPost:
             'Добавьте `text` для отображения в списке модели административного сайта'
         )
 
-        assert 'pub_date' in admin_model.list_display or 'created' in admin_model.list_display, (
-            f'Добавьте `pub_date` или `created` для отображения в списке модели административного сайта'
-        )
+        assert (
+            'pub_date' in admin_model.list_display
+            or 'created' in admin_model.list_display
+        ), 'Добавьте `pub_date` или `created` для отображения в списке модели административного сайта'
         assert 'author' in admin_model.list_display, (
             'Добавьте `author` для отображения в списке модели административного сайта'
         )
@@ -132,9 +129,10 @@ class TestPost:
             'Добавьте `text` для поиска модели административного сайта'
         )
 
-        assert 'pub_date' in admin_model.list_filter or 'created' in admin_model.list_filter, (
-            f'Добавьте `pub_date` или `created` для фильтрации модели административного сайта'
-        )
+        assert (
+            'pub_date' in admin_model.list_filter
+            or 'created' in admin_model.list_filter
+        ), 'Добавьте `pub_date` или `created` для фильтрации модели административного сайта'
 
         assert hasattr(admin_model, 'empty_value_display'), (
             'Добавьте дефолтное значение `-пусто-` для пустого поля'

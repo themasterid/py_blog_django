@@ -170,9 +170,13 @@ class PaginatorViewsTest(TestCase):
                     pages).context.get('page_obj')),
                     posts_on_first_page
                 )
-                self.assertEqual(len(self.unauthorized_client.get(
-                    pages + '?page=2').context.get('page_obj')),
-                    posts_on_second_page
+                self.assertEqual(
+                    len(
+                        self.unauthorized_client.get(
+                            f'{pages}?page=2'
+                        ).context.get('page_obj')
+                    ),
+                    posts_on_second_page,
                 )
 
 
