@@ -265,7 +265,7 @@ class TestCustomErrorPages:
         )
 
         try:
-            from yatube.urls import handler404 as handler404_student
+            from py_blog.urls import handler404 as handler404_student
         except ImportError:
             assert False, (
                 f'Убедитесь, что для страниц, возвращающих код {code}, '
@@ -277,7 +277,7 @@ class TestCustomErrorPages:
         code = 500
 
         try:
-            from yatube.urls import handler500
+            from py_blog.urls import handler500
         except ImportError:
             assert False, (
                 f'Убедитесь, что для страниц, возвращающих код {code}, '
@@ -289,7 +289,7 @@ class TestCustomErrorPages:
         code = 403
 
         try:
-            from yatube.urls import handler403
+            from py_blog.urls import handler403
         except ImportError:
             assert False, (
                 f'Убедитесь, что для страниц, возвращающих код {code}, '

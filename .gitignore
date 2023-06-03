@@ -3,16 +3,16 @@
 __pycache__/
 *.py[cod]
 *$py.class
-yatube/yatube_cache/
-yatube/yatube/secret_email.py
-yatube/yatube/secret_settings.txt
+py_blog/py_blog_cache/
+py_blog/py_blog/secret_email.py
+py_blog/py_blog/secret_settings.txt
 _db.sqlite3
 *.sqlite3
 py_db.sqlite3
 # C extensions
 *.so
 *.bat
-yatube/static/
+py_blog/static/
 *.png
 *.ico
 *.css
@@ -158,5 +158,5 @@ dmypy.json
 
 # папки со статикой и медиа
 # static/
-# yatube/posts/static/
-# yatube/media/
+# py_blog/posts/static/
+# py_blog/media/
