@@ -27,6 +27,7 @@ def get_post_like(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
+        return redirect('posts:post_detail', post_id)
     post.likes.add(request.user)
     return redirect('posts:post_detail', post_id)
 
@@ -115,7 +116,7 @@ def post_detail(request, post_id):
 
     if not Ip.objects.filter(ip=ip).exists():
         Ip.objects.create(ip=ip)
-    
+
     post.views.add(Ip.objects.get(ip=ip))
     if following:
         following = author.following.filter(user=request.user).exists()
@@ -228,7 +229,6 @@ def profile_unfollow(request, username):
     if profile_follow.exists():
         profile_follow.delete()
     return redirect('posts:profile', username=username)
-
 
 
 @login_required
