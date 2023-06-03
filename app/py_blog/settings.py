@@ -202,6 +202,15 @@ CKEDITOR_CONFIGS = {
         'toolbar_Basic': [
             ['Source', '-', 'Bold', 'Italic']
         ],
+        'codeSnippet_languages': {
+            'html': 'HTML',
+            'css': 'CSS',
+            'javascript': 'JavaScript',
+            'python': 'Python',
+            'php': 'PHP',
+            'go': 'Golang',
+            'bash': 'BASH',
+        },
         'toolbar_YourCustomToolbarConfig': [
             {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
             {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
@@ -237,7 +246,6 @@ CKEDITOR_CONFIGS = {
         'forcePasteAsPlainText': True,
         'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'codesnippet',
             'uploadimage',
             'div',
             'autolink',
@@ -251,10 +259,13 @@ CKEDITOR_CONFIGS = {
             'clipboard',
             'dialog',
             'dialogui',
+            'codesnippet',
             'elementspath'
         ]),
     }
 }
+
+CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/'
 
 CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
 

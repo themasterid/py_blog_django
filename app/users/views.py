@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.db.models import Count
 from django.shortcuts import redirect, render
@@ -9,15 +10,15 @@ from .forms import CreationForm, MessageForm, ProfileForm, UserForm
 from .models import Chat
 
 
-class DialogsView(View):
+class DialogsView(LoginRequiredMixin, View):
     def get(self, request):
-        chats = Chat.objects.filter(
-            members__in=[request.user.id])
-        template = 'users/dialogs.html'
+        user_chats = Chat.objects.filter(members__in=[request.user.id])
+        template_name = 'users/dialogs.html'
         context = {
             'user_profile': request.user,
-            'chats': chats}
-        return render(request, template, context)
+            'chats': user_chats
+        }
+        return render(request, template_name, context)
 
 
 class CreateDialogView(View):
