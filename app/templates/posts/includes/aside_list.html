@@ -3,9 +3,9 @@
 {% load cache %}
 {% cache 20 aside_list all_posts comments groups users %}
 
-<div class="list-group">
-    <div class="list-group-item list-group-item-primary">
-        <h5 class="mb-1">Последние посты</h5>
+<div class="list-group m-1">
+    <div class="list-group-item list-group-item-secondary">
+        Последние посты
     </div>
     {% for post in all_posts %}
         <a 
@@ -18,9 +18,9 @@
         </a>
     {% endfor %}
 </div>
-<div class="list-group">
-    <div class="list-group-item list-group-item-primary">
-        <h5 class="mb-1">Последние комментарии</h5>
+<div class="list-group m-1">
+    <div class="list-group-item list-group-item-secondary">
+        Последние комментарии
     </div>
     {% for comment in comments %}
         <a
@@ -33,9 +33,9 @@
         </a>
     {% endfor %}
 </div>
-<div class="list-group">
-    <div class="list-group-item list-group-item-primary">
-        <h5 class="mb-1">Группы</h5>
+<div class="list-group m-1">
+    <div class="list-group-item list-group-item-secondary">
+        Группы
     </div>
 {% for name in groups %}
     <a
@@ -50,9 +50,9 @@
     </a>
 {% endfor %}
 </div>
-<div class="list-group">
-    <div class="list-group-item list-group-item-primary">
-        <h5 class="mb-1">ТОП-5 авторов</h5>
+<div class="list-group m-1">
+    <div class="list-group-item list-group-item-secondary">
+        ТОП-5 авторов
     </div>
 {% for user in users %}
     <a

@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-{% block title %}Последние обновления на сайте{% endblock %}
-{% block content %}
 {% load static %}
 {% load thumbnail %}
-<div class="row p-2 mb-2 bg-white rounded">
+{% block title %}Последние обновления на сайте{% endblock %}
+{% block content %}
+<div class="row mp-2 mb-2 bg-white rounded">
   <aside class="col-12 col-md-3 p-2 mb-2 bg-white rounded">
   {% include 'posts/includes/aside.html' %} 
   {% include 'posts/includes/aside_list.html' %}

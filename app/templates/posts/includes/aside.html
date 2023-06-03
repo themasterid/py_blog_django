@@ -18,7 +18,7 @@
 {% if request.user.is_authenticated %}
     {% with request.resolver_match.view_name as view_name %}
         {% if request.user == "brootos" %}
-            <div class="list-group">
+            <div class="list-group m-1">
             <a href="{% url 'posts:profile' user.username %}" class="list-group-item list-group-item-action list-group-item-light">
             Профиль <span class="badge rounded-pill bg-danger">{{ user.get_full_name }}</span>
             </a>

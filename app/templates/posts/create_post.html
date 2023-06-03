@@ -1,18 +1,16 @@
 {% extends "base.html" %}
-{% block title %}{% if is_edit %}Редактировать запись{% else %}Добавить запись{% endif %}{% endblock %}
-
 {% load static %}
 {% load thumbnail %}
-
+{% block title %}{% if is_edit %}Редактировать запись{% else %}Добавить запись{% endif %}{% endblock %}
 {% block content %}
 
-<div class="row shadow-lg p-2 mb-2 bg-white rounded">
-<aside class="col-12 col-md-3 shadow-lg p-2 mb-2 bg-white rounded">
+<div class="row mp-2 mb-2 bg-white rounded">
+<aside class="col-12 col-md-3 p-2 mb-2 bg-white rounded">
 {% include 'posts/includes/aside.html' %} 
 {% include 'posts/includes/aside_list.html' %}
 </aside>
 <article class="col-12 col-md-9">
-<div class="row shadow-lg p-2 mb-2 bg-white rounded">
+<div class="row p-2 mb-2 bg-white rounded">
 
 <div class="row justify-content-center">
 <div class="col">
@@ -39,7 +37,7 @@
               action="{% url 'posts:edit' post.id %}" 
           {% else %}
               action="{% url 'posts:create' %}" 
-          {% endif %}} enctype="multipart/form-data">
+          {% endif %} enctype="multipart/form-data">
           {% csrf_token %}
           {{ form.media }}
           {% for field in form %}

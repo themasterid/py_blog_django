@@ -4,29 +4,29 @@
     <ul class="list-group p-1 mb-2 list-group-flush">
         {% include 'posts/includes/ul_posts.html' %}
         {% thumbnail post.image "960x239" crop="center" upscale=True as im %}
-            <a href="{% url 'posts:post_detail' post.id %}" class="link-light text-decoration-none" style="color: black;">
+            <a href="{% url 'posts:post_detail' post.id %}" class="link-dark text-decoration-none">
             <img class="card-img-top" src="{{ im.url }}">
             </a>
         {% endthumbnail %}
         <li class="list-group-item list-group-item-light d-flex justify-content-between">
         <span>
             <h4>
-            <a href="{% url 'posts:post_detail' post.id %}" class="link-light text-decoration-none" style="color: black;">
+            <a href="{% url 'posts:post_detail' post.id %}" class="link-dark text-decoration-none">
             {{ post.title }}
             </a>
             </h4>
         </span>
         <span>
-            <a href="{% url "posts:post_share" post.id %}" class="link-light text-decoration-none">
+            <a href="{% url "posts:post_share" post.id %}" class="link-dark text-decoration-none">
             <img src="{% static 'img/send_email.png' %}" width='24px;' height='24px;' alt="Поделиться постом"
             data-toggle="tooltip" data-placement="top" title="Поделиться постом">
             </a>
             {% if request.user == post.author %}
                 |
-                <a href="{% url 'posts:edit' post.id %}" class="link-light text-decoration-none">
+                <a href="{% url 'posts:edit' post.id %}" class="link-dark">
                 <img src="{% static 'img/edit_btn.gif' %}" width='24px;' height='24px;' data-toggle="tooltip" data-placement="top" title="Редактировать пост">
                 </a> |
-                <a href="{% url 'posts:delete' post.id %}" class="link-light text-decoration-none"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <a href="{% url 'posts:delete' post.id %}" class="link-dark text-decoration-none"  data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <img src="{% static 'img/delete_btn.gif' %}" width='24px;' height='24px;' data-toggle="tooltip" data-placement="top" title="Удалить пост">
                 </a>
                 {% if not post.status %} Не опубликован {% endif %}
