@@ -1,25 +1,42 @@
 import os
+from pathlib import Path
 
-# from .secret_email import EMAILHOST_PASSWORD, EMAILHOST_USER
+import environ
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+env = environ.Env()
 
-SECRET_KEY = "4bhjbafy45ub4h6b4yubgkkrfbvdrbrdbrtthbsbdgf"
+environ.Env.read_env()
 
-DEBUG = True
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+EMAILHOST_PASSWORD = env(
+    'EMAILHOST_PASSWORD',
+    default="test@test.test")
+
+EMAILHOST_USER = env(
+    'EMAILHOST_USER',
+    default="1234")
+
+SECRET_KEY = env(
+    'SECRET_KEY',
+    default="unsafe-secret-key-1234QWERTYqwerty")
+
+DEBUG = env(
+    'DEBUG',
+    default='True'
+) == 'True'
 
 CSRF_FAILURE_VIEW = 'core.views.csrf_failure'
 
-ALLOWED_HOSTS = [
-    'themasterid.pythonanywhere.com',
-    '*',
-]
+ALLOWED_HOSTS = env(
+    'ALLOWED_HOSTS',
+    default='localhost').split(', ')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
@@ -46,6 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'sorl.thumbnail',
     'users.apps.UsersConfig',
     # 'debug_toolbar',
@@ -105,6 +123,28 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': env(
+#             'DB_ENGINE',
+#             default='django.db.backends.postgresql'),
+#         'NAME': env(
+#             'POSTGRES_DB'),
+#         'USER': env(
+#             'POSTGRES_USER',
+#             default='postgres'),
+#         'PASSWORD': env(
+#             'POSTGRES_PASSWORD',
+#             default='postgres'),
+#         'HOST': env(
+#             'DB_HOST',
+#             default='localhost'),
+#         'PORT': env(
+#             'DB_PORT',
+#             default='5432')
+#     }
+# }
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth'
@@ -124,29 +164,31 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 LANGUAGE_CODE = 'ru-RU'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
-USE_L10N = False
+USE_L10N = True
 
 USE_TZ = True
 
 DATE_FORMAT = 'd E Y'
 
-STATIC_URL = '/static/'
-
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
+STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
 
 NUMBER_POST = 5
 
-MEDIA_URL = '/media/'
+if DEBUG:
+    STATICFILES_DIRS = [BASE_DIR / STATIC_URL]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL)
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL)
 
 INTERNAL_IPS = ('127.0.0.1', '192.168.0.1',)
 
