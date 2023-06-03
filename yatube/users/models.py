@@ -4,7 +4,13 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
+
+DATE_FORMAT = "%d.%m.%Y"
+GENRE_CHOICES = (
+    ('m', 'Мужчина'),
+    ('w', 'Женщина'),
+)
 
 
 class Chat(models.Model):
@@ -60,6 +66,7 @@ class Message(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(
         User,
+        related_name='profile',
         on_delete=models.CASCADE,
         verbose_name='Пользователь')
     bio = models.TextField(
@@ -67,22 +74,29 @@ class Profile(models.Model):
         blank=True,
         verbose_name='О себе',
         help_text='Информация о себе')
+    genre = models.CharField(
+        max_length=1,
+        choices=GENRE_CHOICES,
+        null=True)
     location = models.CharField(
         max_length=30,
         blank=True,
         verbose_name='Местоположение',
         help_text='Страна проживания')
     birth_date = models.DateField(
-        null=True,
         blank=True,
+        null=True,
         verbose_name='Дата рождения',
-        help_text='Ваша дата рождения')
+        help_text='Ваша дата рождения (ГГГГ-ММ-ДД)')
     avatar = models.ImageField(
         upload_to='avatars/',
         null=True,
         blank=True,
         verbose_name='Фото',
         help_text='Ваша фотография')
+    last_online = models.DateTimeField(
+        blank=True,
+        null=True)
 
     class Meta:
         verbose_name_plural = 'Профили'
@@ -91,13 +105,30 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.user)
 
+    def is_online(self):
+        if self.last_online:
+            time_delta = timezone.timedelta(minutes=60)
+            time_now = timezone.now() - self.last_online
+            return time_now < time_delta
+        return False
+
+    def get_online_info(self):
+        if self.is_online():
+            return _('Онлайн')
+        if self.last_online:
+            date = self.last_online.date().strftime(DATE_FORMAT)
+            return _(f'Последний визит {date}')
+        return _('Неизвестно')
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+    try:
+        user = Profile.objects.get(id=instance.id)
+        user.last_online = timezone.now()
+        user.save(update_fields=['last_online'])
+        instance.profile.save()
+        return user
+    except Profile.DoesNotExist:
+        return None

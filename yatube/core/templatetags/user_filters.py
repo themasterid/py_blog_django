@@ -10,7 +10,4 @@ def addclass(field, css):
 
 @register.simple_tag
 def get_companion(user, chat):
-    for u in chat.members.all():
-        if u != user:
-            return u
-    return None
+    return next((u for u in chat.members.all() if u != user), None)

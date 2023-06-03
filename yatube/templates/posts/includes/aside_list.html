@@ -2,6 +2,7 @@
 {% load thumbnail %}
 {% load cache %}
 {% cache 20 aside_list all_posts comments groups users %}
+
 <div class="list-group">
     <div class="list-group-item list-group-item-primary">
         <h5 class="mb-1">Последние посты</h5>
@@ -66,7 +67,20 @@
     {{ user.1 }}
     </span>
     </strong>
+    {% if user.0.profile.get_online_info == "Онлайн" %}
+        <br>
+        <small style="color: green";>
+            {{ user.0.profile.get_online_info }}
+        </small>
+    {% else %}
+        <br>
+        <small style="color: red">
+            {{ user.0.profile.get_online_info }}
+        </small>
+    {% endif %}
     </a>
+
 {% endfor %}
 </div>
 {% endcache %}
+

@@ -16,8 +16,7 @@ User = get_user_model()
 
 
 def get_client_ip(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
+    if x_forwarded_for := request.META.get('HTTP_X_FORWARDED_FOR'):
         return x_forwarded_for.split(',')[0]
     return request.META.get('REMOTE_ADDR')
 
@@ -255,10 +254,8 @@ def post_share(request, post_id):
             cd['comments'] = '---пусто---'
         post_url = f'https://themasterid.pythonanywhere.com/posts/{post_id}/'
         # post_url = request.build_absolute_uri(post.get_absolute_url())
-        subject = '{} ({}) рекоменду прочитать "{}"'.format(
-            cd['name'], cd['email'], post.title)
-        message = 'Прочти "{}" на {}\n\n{} оставил комментарий: {}'.format(
-            post.title, post_url, cd['name'], cd['comments'])
+        subject = f"""{cd['name']} ({cd['email']}) рекоменду прочитать "{post.title}\""""
+        message = f"""Прочти "{post.title}" на {post_url}\n\n{cd['name']} оставил комментарий: {cd['comments']}"""
         send_mail(subject, message, 'thebrootos@gmail.com', [cd['to']])
         send = True
         return render(

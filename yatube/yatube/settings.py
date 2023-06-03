@@ -4,8 +4,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-with open('yatube/secret_settings.txt') as f:
-    SECRET_KEY = f.read().strip()
+SECRET_KEY = "4bhjbafy45ub4h6b4yubgkkrfbvdrbrdbrtthbsbdgf"
 
 DEBUG = True
 
@@ -20,23 +19,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
-'''
 EMAIL_HOST = 'smtp.gmail.com'
 
-EMAIL_HOST_USER = EMAILHOST_USER
+# EMAIL_HOST_USER = EMAILHOST_USER
 
-EMAIL_HOST_PASSWORD = EMAILHOST_PASSWORD
+# EMAIL_HOST_PASSWORD = EMAILHOST_PASSWORD
 
 EMAIL_PORT = 587
 
 EMAIL_USE_TLS = True
-'''
 
 LOGIN_URL = 'users:login'
 
@@ -53,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'sorl.thumbnail',
     'users.apps.UsersConfig',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'posts.apps.PostsConfig',
     'about.apps.AboutConfig',
     'core.apps.CoreConfig',
@@ -69,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'yatube.urls'
@@ -96,9 +91,8 @@ TEMPLATES = [
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        # 'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': os.path.join(BASE_DIR, 'yatube_cache/')
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'default-cache'
     }
 }
 
@@ -130,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'UTC'
 
@@ -146,7 +140,7 @@ STATIC_URL = '/static/'
 
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
 
 NUMBER_POST = 5
 
@@ -172,7 +166,7 @@ CKEDITOR_CONFIGS = {
             {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
             {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
-            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat', 'CodeSnippet']},
             {'name': 'paragraph', 'items': [
                 'NumberedList',
                 'BulletedList',
@@ -201,6 +195,7 @@ CKEDITOR_CONFIGS = {
         'forcePasteAsPlainText': True,
         'tabSpaces': 4,
         'extraPlugins': ','.join([
+            'codesnippet',
             'uploadimage',
             'div',
             'autolink',
