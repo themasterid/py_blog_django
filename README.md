@@ -4,7 +4,7 @@
 Проект в разработке, каждый день что то новое добавляется или изменияется старое.
 
 Технологии:
-- Django 3.2
+- Django 4
 - Bootstrap 5
 - HTML
 - CSS
@@ -47,4 +47,7 @@ python manage.py migrate
 python manage.py collectstatic
 ```
 
-TODO - дописать.
+TODO - дописать. 2023
+
+Автор проекта: 
+* [Клепиков Дмитрий](https://github.com/themasterid)
